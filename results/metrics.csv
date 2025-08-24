@@ -1,4 +1,4 @@
 label,distance,nodes_expanded,millis,path_len
-dijkstra,118.5,18,0,18
-astar,118.5,18,0,18
-bidir_astar,118.5,34,0,18
+dijkstra,18.5,23,2,11
+astar,18.5,11,1,11
+bidir_astar,18.5,12,23,11
