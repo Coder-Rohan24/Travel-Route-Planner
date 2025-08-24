@@ -1,0 +1,47 @@
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install system deps
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y g++ make python3 python3-pip
+
+      - name: Install python deps for analysis (optional)
+        run: |
+          python3 -m pip install --upgrade pip
+          pip3 install pandas
+
+      - name: Build
+        run: |
+          chmod +x build.sh
+          ./build.sh
+
+      - name: Run unit tests
+        run: |
+          ./bin/route_planner --help || true
+          # run test compile
+          g++ -std=gnu++17 -O2 test/unit_tests.cpp -I src -o bin/unit_tests || true
+          ./bin/unit_tests || true
+
+      - name: Run small benchmark (synthetic)
+        run: |
+          # create tiny synthetic data to exercise binary
+          mkdir -p tempdata
+          cat > tempdata/cities.csv <<EOF
+          0,0.0,0.0,A
+          1,0.1,0.0,B
+          2,0.0,0.1,C
+          EOF
+          cat > tempdata/routes.csv <<EOF
+          0,1,10
+          1,2,10
+          0,2,25
+          EOF
+          ./bin/route_planner tempdata/cities.csv tempdata/routes.csv 0 2

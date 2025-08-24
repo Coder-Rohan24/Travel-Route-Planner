@@ -1,0 +1,2 @@
+{ "type": "FeatureCollection", "features": [
+{ "type":"Feature", "geometry": { "type":"LineString", "coordinates": [[69.1833000, 34.4667000], [19.8167000, 41.3000000]] }, "properties": { "stroke": "#FF0000", "stroke-width": 4 } },{ "type":"Feature", "geometry": { "type":"Point", "coordinates": [69.1833000, 34.4667000] }, "properties": { "marker-color":"#00FF00", "title":"start" } },{ "type":"Feature", "geometry": { "type":"Point", "coordinates": [19.8167000, 41.3000000] }, "properties": { "marker-color":"#0000FF", "title":"target" } }] }

@@ -1,0 +1,4 @@
+label,distance,nodes_expanded,millis,path_len
+dijkstra_avg,39.12,19,10,10
+astar_avg,39.89,16,20,11
+bidir_astar_avg,41.53,16,19,12

@@ -1,0 +1,33 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Route Planner - Visualization</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <style> #map { height: 90vh; width: 100%; margin:0; padding:0; } body{ margin:0; padding:0; } </style>
+</head>
+<body>
+<div id="map"></div>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+fetch('route.geojson').then(r=>r.json()).then(data=>{
+  var map = L.map('map');
+  var coords = data.features[0].geometry.coordinates;
+  var first = coords[0];
+  map.setView([first[1], first[0]], 12);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© OpenStreetMap contributors'
+  }).addTo(map);
+  L.geoJSON(data, {
+    style: function(feature){
+      return {color: feature.properties.stroke || '#ff0000', weight: feature.properties["stroke-width"]||3};
+    },
+    pointToLayer: function(feature, latlng){
+      return L.circleMarker(latlng, {radius:6, color: feature.properties["marker-color"]||'#000'});
+    }
+  }).addTo(map);
+});
+</script>
+</body>
+</html>
